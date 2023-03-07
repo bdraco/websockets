@@ -34,6 +34,7 @@ setuptools.setup(
     name="websockets",
     version=version,
     description=description,
+    install_requires=["async_timeout>=3.0.1;python_version<'3.11'"],
     long_description=long_description,
     url="https://github.com/aaugustin/websockets",
     author="Aymeric Augustin",
