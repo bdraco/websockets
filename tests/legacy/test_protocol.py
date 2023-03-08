@@ -929,8 +929,14 @@ class CommonTests:
         self.receive_frame(Frame(True, OP_PING, b"test"))
         self.receive_eof()
 
+        async def delayed_close():
+            # Close runs right away and not in a task so we need
+            # to make sure the eof is processed first.
+            await asyncio.sleep(MS)
+            await self.protocol.close()
+
         with self.assertNoLogs():
-            self.loop.run_until_complete(self.protocol.close())
+            self.loop.run_until_complete(delayed_close())
 
     def test_ignore_pong(self):
         self.receive_frame(Frame(True, OP_PONG, b"test"))
@@ -1370,7 +1376,7 @@ class CommonTests:
         # Receive the incoming close frame right after self.protocol.close()
         # starts executing. This reproduces the error described in:
         # https://github.com/aaugustin/websockets/issues/339
-        self.loop.call_soon(self.receive_frame, self.remote_close)
+        self.receive_frame(self.remote_close)
         self.loop.call_soon(self.receive_eof_if_client)
 
         self.loop.run_until_complete(self.protocol.close(reason="local"))
