@@ -28,3 +28,6 @@ if sys.version_info[:2] < (3, 11):
     from .async_timeout import timeout as asyncio_timeout  # noqa: F401
 else:  # pragma: no cover
     from asyncio import timeout as asyncio_timeout  # noqa: F401
+
+
+__all__ = ["asyncio_timeout", "loop_if_py_lt_38"]
