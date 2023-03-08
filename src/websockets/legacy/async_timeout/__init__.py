@@ -1,3 +1,8 @@
+#
+# From https://github.com/aio-libs/async-timeout/blob/master/async_timeout/__init__.py
+#
+# Remove this file when we drop support for Python 3.10 and below
+#
 import asyncio
 import enum
 import sys
