@@ -52,9 +52,8 @@ from ..frames import (
 )
 from ..protocol import State
 from ..typing import Data, LoggerLike, Subprotocol
-from .compatibility import loop_if_py_lt_38
+from .compatibility import asyncio_timeout, loop_if_py_lt_38
 from .framing import Frame
-from .utils import asyncio_timeout
 
 
 __all__ = ["WebSocketCommonProtocol", "broadcast"]
