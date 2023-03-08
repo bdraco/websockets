@@ -928,15 +928,9 @@ class CommonTests:
         # which prevents responding with a pong frame properly.
         self.receive_frame(Frame(True, OP_PING, b"test"))
         self.receive_eof()
-
-        async def delayed_close():
-            # Close runs right away and not in a task so we need
-            # to make sure the eof is processed first.
-            await asyncio.sleep(MS)
-            await self.protocol.close()
-
+        self.loop.run_until_complete(asyncio.sleep(MS))
         with self.assertNoLogs():
-            self.loop.run_until_complete(delayed_close())
+            self.loop.run_until_complete(self.protocol.close())
 
     def test_ignore_pong(self):
         self.receive_frame(Frame(True, OP_PONG, b"test"))
