@@ -3,6 +3,7 @@
 #
 # Remove this file when we drop support for Python 3.10 and below
 #
+# pragma: no cover
 import asyncio
 import enum
 import sys
