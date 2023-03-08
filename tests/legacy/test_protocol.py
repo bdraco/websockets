@@ -928,6 +928,7 @@ class CommonTests:
         # which prevents responding with a pong frame properly.
         self.receive_frame(Frame(True, OP_PING, b"test"))
         self.receive_eof()
+
         self.loop.run_until_complete(asyncio.sleep(MS))
         with self.assertNoLogs():
             self.loop.run_until_complete(self.protocol.close())
